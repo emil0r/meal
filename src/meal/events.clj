@@ -25,6 +25,9 @@
     (log/info {:what :meal/add
                :data ?data})))
 
+(defmethod event-handler :meal/fetch-data [{:keys [?data ?reply-fn]}]
+  (?reply-fn (meal/get-meal (:id ?data))))
+
 (defmethod event-handler :auth/authenticate [{:keys [?reply-fn ?data]}]
   (let [name (get-in ?data ["name"])
         id (get-in ?data ["id"])]

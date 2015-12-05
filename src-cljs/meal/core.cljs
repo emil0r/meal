@@ -12,15 +12,12 @@
               [secretary.core :as secretary]
               meal.channel
               [meal.login :as login]
-              ;;[meal.logout :refer [logout]]
               [meal.routes :refer [view-page]]
-              ;;[meal.storage :as storage]
+              meal.sync
               [meal.views.index :as views.index]
+              [meal.views.meal :as views.meal]
               [meal.views.navbar :as views.navbar]
-              [meal.views.share :as views.share]
-              ;;meal.updates
-              ;;[meal.util :refer [logo]]
-              )
+              [meal.views.share :as views.share])
     (:import [goog History]))
 
 (enable-console-print!)
@@ -36,7 +33,8 @@
 
 
 (defn get-state [db _]
-  (reaction (get-in @db [:view] :index)))
+  (reaction [@(reaction (get-in @db [:view] :index))
+             @(reaction (get-in @db [:meal/id] nil))]))
 
 
 
@@ -46,9 +44,10 @@
                  (secretary/dispatch! (.-token event))))
 (.setEnabled history true)
 
-(defn change-view-handler [state [_ view]]
+(defn change-view-handler [state [_ view meal-id]]
   (assoc state
          :view (keyword view)
+         :meal/id meal-id
          :uri (str "/" view)))
 
 (defn init []
@@ -62,11 +61,14 @@
   (init)
   (let [state (subscribe [:state])]
     (fn []
-      (let [view @state]
-        (.setToken history (name view))
+      (let [[view meal] @state]
+        (if (nil? meal)
+          (.setToken history (name view))
+          (.setToken history (str (name view) "/" meal)))
         [:div#content.container
          [:div.row
           [:div.col-xs-11 (match [view]
+                                 [:meal] [views.meal/view meal]
                                  [:share] [views.share/view]
                                  [_] [views.index/view])]
           [:div.col-xs-1 [views.navbar/sidebar]]]]))))

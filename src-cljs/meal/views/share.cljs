@@ -4,13 +4,14 @@
             [meal.input :as input]
             [re-frame.core :refer [dispatch register-handler]]
             [reagent.core :as r]
+            [secretary.core :as secretary]
             [taoensso.sente :as sente]))
 
 
 
 (defn share-cb [reply]
   (if (sente/cb-success? reply)
-    (println reply)))
+    (secretary/dispatch! (str "/meal/" (:slug reply)))))
 
 (defn handle-share [state [_ name picture ingredients description]]
   (when-let [auth (:auth state)]
@@ -45,6 +46,7 @@
         [:th "Picture"]
         [:td [input/file
               :picture picture
+              :class :form-control
               :accept "image/*;capture=camera"]]]
        [:tr
         [:th]

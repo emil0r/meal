@@ -5,3 +5,8 @@
 
 (defroute view-page "/:tab" [tab]
   (dispatch [:view/change tab]))
+
+
+(defroute view-meal "/meal/:meal-id" [meal-id]
+  (dispatch [:meal/id meal-id])
+  (dispatch [:view/change "meal" meal-id]))

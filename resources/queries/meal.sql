@@ -1,6 +1,10 @@
--- name: sql-get-meals
+--name: sql-get-meal
 
-SELECT * FROM recipe;
+SELECT name, image, description, ingredients FROM recipe WHERE key = :id;
+
+--name: sql-get-meals
+
+SELECT name, image, description, ingredients FROM recipe;
 
 --name: sql-add-meal<!
 

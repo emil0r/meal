@@ -24,7 +24,7 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>"
-        ;;"<fb:login-button scope='public_profile,email' onlogin='checkLoginState ();'></fb:login-button>"
+        "<fb:login-button id='fb-login-button' scope='public_profile,email' onlogin='checkLoginState ();'></fb:login-button>"
         [:noscript "You need javascript enabled"]
         [:div#app {:style "height: 100%;"}]
         [:script {:type "text/javascript"

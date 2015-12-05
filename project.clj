@@ -34,7 +34,8 @@
                  [ez-web "0.3.0"]
                  [cljs-ajax "0.5.1"]
                  [com.taoensso/sente "1.6.0"]
-                 [joplin.jdbc "0.3.4"]]
+                 [joplin.jdbc "0.3.4"]
+                 [yesql "0.5.1"]]
 
   :uberjar-name "meal.jar"
 

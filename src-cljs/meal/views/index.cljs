@@ -1,5 +1,7 @@
-(ns meal.views.index)
+(ns meal.views.index
+  (:require [meal.views.navbar :as views.navbar]))
 
 
 (defn index []
-  [:div "foobar"])
+  [:div.content
+   (views.navbar/navbar)])

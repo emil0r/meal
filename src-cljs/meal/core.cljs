@@ -10,10 +10,10 @@
               [re-frame.db :refer [app-db]]
               [reagent.core :as r]
               [secretary.core :as secretary]
-              ;;meal.channel
-              meal.login
+              meal.channel
+              [meal.login :as login]
               ;;[meal.logout :refer [logout]]
-              ;;[meal.routes :refer [view-page]]
+              [meal.routes :refer [view-page]]
               ;;[meal.storage :as storage]
               [meal.views.index :as views.index]
               ;;meal.updates
@@ -52,7 +52,7 @@
 (defn init []
   (register-handler :view/change change-view-handler)
   (register-sub :state get-state)
-  )
+  (meal.channel/init))
 
 
 (defn main []
@@ -62,6 +62,7 @@
       (let [view @state]
         (.setToken history (name view))
         (match [view]
+               ;;[:login] [login/show-login]
                [_] [views.index/index])))))
 
 

@@ -13,6 +13,9 @@
   (def connected-uids connected-uids) ; Watchable, read-only atom
   )
 
+
+(defmulti handle-event)
+
 ;; (chsk-send! ;;"9ba13adb-bc74-4719-92c2-b5e159ce268e"
 ;;  ;;:taoensso.sente/nil-uid
 ;;  ;;:sente/all-users-without-uid

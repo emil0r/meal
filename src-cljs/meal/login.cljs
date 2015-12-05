@@ -1,15 +1,19 @@
-(ns meal.login)
+(ns meal.login
+  (:require [meal.channel :as channel]
+            [reagent.core :as r]))
 
 
-(defn show-login []
-  "<fb:login-button scope='public_profile,email' onlogin='meal.login.handle_login();'></fb:login-button>")
+
+(defn ^:export authenticate [response]
+  (let [r (js->clj response)]
+    (println r)
+    (channel/chsk-send! [:auth/authenticate r])))
 
 (defn ^:export check-login [response]
   (let [r (js->clj response)]
-    ;;(println (get r "status"))
-    )
-  (.log js/console response)
-  (println "yea yea"))
+    (case (get r "status")
+      "connected" (.api js/FB "/me" meal.login.authenticate)
+      nil)))
 
 
 (defn ^:export handle-login [response]

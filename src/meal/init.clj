@@ -4,6 +4,7 @@
             [org.httpkit.server :as http-server :refer [run-server]]
             [taoensso.timbre :as log]
             [meal.database :as db]
+            [meal.events :as events]
             [meal.routes :as routes]
             [meal.server :as server]
             [meal.settings :as settings]))
@@ -17,6 +18,7 @@
     (component/system-map
      :settings settings
      :database (db/database db-specs)
+     :events (events/events-listener)
      :server (component/using (server/get-server {:server-options server-options
                                                   :run-server run-server
                                                   :stop-server stop-server

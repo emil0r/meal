@@ -1,13 +1,21 @@
 (ns meal.login
   (:require [meal.channel :as channel]
+            [re-frame.core :refer [dispatch register-handler]]
             [reagent.core :as r]))
 
 
 
+(defn handle-authenticated [state [_ {:keys [id name]}]]
+  (assoc state :auth {:id id :name name}))
+
+(register-handler :auth/authenticated handle-authenticated)
+
 (defn ^:export authenticate [response]
   (let [r (js->clj response)]
-    (println r)
-    (channel/chsk-send! [:auth/authenticate r])))
+    (channel/chsk-send! [:auth/authenticate r]
+                        1000
+                        (fn [reply]
+                          (dispatch [:auth/authenticated reply])))))
 
 (defn ^:export check-login [response]
   (let [r (js->clj response)]

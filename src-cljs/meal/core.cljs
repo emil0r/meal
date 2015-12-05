@@ -54,7 +54,8 @@
 (defn init []
   (register-handler :view/change change-view-handler)
   (register-sub :state get-state)
-  (meal.channel/init))
+  (meal.channel/init)
+  (views.share/init))
 
 
 (defn main []

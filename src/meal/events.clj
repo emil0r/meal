@@ -4,6 +4,7 @@
             [taoensso.sente :as sente]
             [taoensso.timbre :as log]
             [meal.channel :as channel]
+            [meal.meal :as meal]
             [meal.user :as user]))
 
 (defonce router (atom nil))
@@ -12,6 +13,18 @@
 (defmethod event-handler :default [e]
   ;; silently drop
   )
+
+(defmethod event-handler :meal/add [{:keys [?reply-fn ?data] :as x}]
+  (let [{:keys [name picture ingredients description auth]} ?data
+        added (meal/add-meal<! {:name name
+                                :ingredients ingredients
+                                :description description
+                                :user_id (:id (user/get (:id auth)))})]
+    (when ?reply-fn
+      (?reply-fn {:slug (:key added)}))
+    (log/info {:what :meal/add
+               :data ?data})))
+
 (defmethod event-handler :auth/authenticate [{:keys [?reply-fn ?data]}]
   (let [name (get-in ?data ["name"])
         id (get-in ?data ["id"])]
@@ -19,7 +32,11 @@
       (log/info {:what ::user-created
                  :name name
                  :id id})
-      (user/create! name id))))
+      (user/create! name id))
+    (when ?reply-fn
+      (?reply-fn {:auth? true
+                  :id id
+                  :name name}))))
 
 (defn wrap-event-handler [{:keys [?reply-fn ring-req] :as packet}]
   (cond

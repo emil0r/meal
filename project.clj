@@ -2,6 +2,8 @@
   :description "Share a meal with me!"
   :url ""
 
+  :main meal.core
+
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [ez-database "0.3.1-beta1"]

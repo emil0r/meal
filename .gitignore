@@ -14,3 +14,4 @@ pom.xml
 /settings.edn
 /resources/public/static/css/main.css
 /resources/public/js/compiled
+/.emacs.desktop*

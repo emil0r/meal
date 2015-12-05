@@ -14,18 +14,7 @@
                   :src "/static/js/fb.js"}]]
 
        [:body
-        #_"<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '846939068738774',
-      xfbml      : true,
-      version    : 'v2.5'
-    });
-
-    FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-    });
-  };
+        "<script>
 
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
@@ -36,7 +25,6 @@
    }(document, 'script', 'facebook-jssdk'));
 </script>"
         ;;"<fb:login-button scope='public_profile,email' onlogin='checkLoginState ();'></fb:login-button>"
-        ;;[:div#status]
         [:noscript "You need javascript enabled"]
         [:div#app {:style "height: 100%;"}]
         [:script {:type "text/javascript"

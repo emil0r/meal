@@ -28,6 +28,10 @@
 (defmethod event-handler :meal/fetch-data [{:keys [?data ?reply-fn]}]
   (?reply-fn (meal/get-meal (:id ?data))))
 
+(defmethod event-handler :meals/fetch [{:keys [?reply-fn ?data]}]
+  (?reply-fn {:meals {:count (meal/get-count)
+                      :meals (meal/get-meals 0 50)}}))
+
 (defmethod event-handler :auth/authenticate [{:keys [?reply-fn ?data]}]
   (let [name (get-in ?data ["name"])
         id (get-in ?data ["id"])]

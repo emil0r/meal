@@ -54,6 +54,7 @@
   (register-handler :view/change change-view-handler)
   (register-sub :state get-state)
   (meal.channel/init)
+  (meal.sync/init)
   (views.share/init))
 
 

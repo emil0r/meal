@@ -10,8 +10,8 @@
 (defn view []
   (let [meal (subscribe [:meal/data])]
     (fn []
-      (let [{:keys [name description ingredients image]} @meal]
-        [:div
+      (let [{:keys [name description ingredients image slug]} @meal]
+        [:div {:key slug}
          [:table.table
           (for [[th td] [["Name" name]
                          ["Description" description]

@@ -21,9 +21,13 @@
 (register-handler :meal/fetch-data handle-cb)
 
 
+(defn sync! [event data handler]
+  (channel/chsk-send! [event data]
+                      1000
+                      #(dispatch [handler %])))
 
 ;; from server
-(defn init-handler [state [_ reply]]
+(defn meals-handler [state [_ reply]]
   (if (sente/cb-success? reply)
     (assoc state
            :meal/count (get-in reply [:meals :count])
@@ -44,9 +48,7 @@
 (defmethod msg-handler :chsk/recv [msg]
   (event-handler msg))
 (defmethod msg-handler :chsk/handshake [{:as ev-msg :keys [?data]}]
-  (channel/chsk-send! [:meals/fetch nil]
-                      1000
-                      #(dispatch [:init/handler %])))
+  (sync! :meals/fetch nil :meals/handler))
 (defmethod msg-handler :default [_]
   ;; do nothing
   )
@@ -54,4 +56,4 @@
 
 (defn init []
   (reset! router (sente/start-chsk-router! channel/ch-chsk msg-handler))
-  (register-handler :init/handler init-handler))
+  (register-handler :meals/handler meals-handler))

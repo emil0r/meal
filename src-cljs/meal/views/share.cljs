@@ -2,6 +2,7 @@
   (:require [clojure.string :as str]
             [meal.channel :as channel]
             [meal.input :as input]
+            [meal.sync :as sync]
             [re-frame.core :refer [dispatch register-handler]]
             [reagent.core :as r]
             [secretary.core :as secretary]
@@ -10,7 +11,8 @@
 
 
 (defn share-cb [reply]
-  (if (sente/cb-success? reply)
+  (when (sente/cb-success? reply)
+    (sync/sync! :meals/fetch nil :meals/handler)
     (secretary/dispatch! (str "/meal/" (:slug reply)))))
 
 (defn handle-share [state [_ name picture ingredients description]]

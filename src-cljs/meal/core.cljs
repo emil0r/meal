@@ -16,3 +16,6 @@
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
 )
 
+
+
+(println "hi ")

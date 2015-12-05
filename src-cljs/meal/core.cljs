@@ -16,6 +16,8 @@
               [meal.routes :refer [view-page]]
               ;;[meal.storage :as storage]
               [meal.views.index :as views.index]
+              [meal.views.navbar :as views.navbar]
+              [meal.views.share :as views.share]
               ;;meal.updates
               ;;[meal.util :refer [logo]]
               )
@@ -61,9 +63,12 @@
     (fn []
       (let [view @state]
         (.setToken history (name view))
-        (match [view]
-               ;;[:login] [login/show-login]
-               [_] [views.index/index])))))
+        [:div#content.container
+         [:div.row
+          [:div.col-xs-11 (match [view]
+                                 [:share] [views.share/view]
+                                 [_] [views.index/view])]
+          [:div.col-xs-1 [views.navbar/sidebar]]]]))))
 
 
 (defn ^:export render-app

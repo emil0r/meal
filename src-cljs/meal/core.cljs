@@ -44,10 +44,14 @@
                  (secretary/dispatch! (.-token event))))
 (.setEnabled history true)
 
-(defn change-view-handler [state [_ view meal-id]]
+(defn change-view-handler [state [_ view extra]]
   (assoc state
          :view (keyword view)
-         :meal/id meal-id
+         :meal/id extra
+         :view/index (if (and (string? extra)
+                              (re-find #"^\d+$" extra))
+                       (.parseInt js/Number extra)
+                       1)
          :uri (str "/" view)))
 
 (defn init []
@@ -77,7 +81,6 @@
 
 (defn ^:export render-app
   []
-  ;;(reset! app-db @storage/db)
   (r/render [main] (.getElementById js/document "app")))
 
 (render-app)

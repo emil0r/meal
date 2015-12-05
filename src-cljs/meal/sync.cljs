@@ -1,8 +1,11 @@
 (ns meal.sync
   (:require [meal.channel :as channel]
+            [meal.util :as util]
             [re-frame.core :refer [dispatch register-handler]]
+            [re-frame.db :refer [app-db]]
             [taoensso.sente :as sente]))
 
+(defonce init? (atom false))
 
 ;; from client
 
@@ -22,9 +25,10 @@
 
 
 (defn sync! [event data handler]
-  (channel/chsk-send! [event data]
-                      1000
-                      #(dispatch [handler %])))
+  (when @init?
+    (channel/chsk-send! [event data]
+                        1000
+                        #(dispatch [handler %]))))
 
 ;; from server
 (defn meals-handler [state [_ reply]]
@@ -48,7 +52,10 @@
 (defmethod msg-handler :chsk/recv [msg]
   (event-handler msg))
 (defmethod msg-handler :chsk/handshake [{:as ev-msg :keys [?data]}]
-  (sync! :meals/fetch nil :meals/handler))
+  (reset! init? true)
+  (sync! :meals/fetch {:pp util/pp
+                       ;; stricly speaking we shouldn't be doing this... but let's break things a bit
+                       :page (get-in @app-db [:view/index] 1)} :meals/handler))
 (defmethod msg-handler :default [_]
   ;; do nothing
   )

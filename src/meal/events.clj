@@ -30,7 +30,7 @@
 
 (defmethod event-handler :meals/fetch [{:keys [?reply-fn ?data]}]
   (?reply-fn {:meals {:count (meal/get-count)
-                      :meals (meal/get-meals 0 50)}}))
+                      :meals (meal/get-meals (dec (get ?data :page 1)) (get ?data :pp 50))}}))
 
 (defmethod event-handler :auth/authenticate [{:keys [?reply-fn ?data]}]
   (let [name (get-in ?data ["name"])

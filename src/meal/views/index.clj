@@ -15,4 +15,4 @@
         [:noscript "You need javascript enabled"]
         [:div#app {:style "height: 100%;"}]
         [:script {:type "text/javascript"
-                  :src "/static/js/compiled/meal.js"}]])))
+                  :src "/js/compiled/meal.js"}]])))

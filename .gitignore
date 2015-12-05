@@ -13,3 +13,4 @@ pom.xml
 .nrepl-port
 /settings.edn
 /resources/public/static/css/main.css
+/resources/public/js/compiled

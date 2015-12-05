@@ -2,6 +2,7 @@
   (:require [com.stuartsierra.component :as component]
 
             ;; middleware for files and resources
+            [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.cookies :refer [wrap-cookies]]
             [ring.middleware.file-info :refer [wrap-file-info]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
@@ -21,6 +22,7 @@
       (let [handler (-> (if dev?
                           (wrap-reload (wrap-stacktrace handler))
                           handler)
+                        (wrap-anti-forgery)
                         (wrap-cookies {:http-only true})
                         (wrap-keyword-params)
                         (wrap-params)

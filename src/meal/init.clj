@@ -3,6 +3,7 @@
             [com.stuartsierra.component :as component]
             [org.httpkit.server :as http-server :refer [run-server]]
             [taoensso.timbre :as log]
+            [meal.database :as db]
             [meal.routes :as routes]
             [meal.server :as server]
             [meal.settings :as settings]))
@@ -11,11 +12,11 @@
 
 (defn- system-map [{:keys [settings run-server stop-server
                            server-options prod? log
-                           admins db-url yubi]}]
+                           admins db-specs]}]
   (let []
-
     (component/system-map
      :settings settings
+     :database (db/database db-specs)
      :server (component/using (server/get-server {:server-options server-options
                                                   :run-server run-server
                                                   :stop-server stop-server
@@ -45,6 +46,7 @@
                       :log (settings/get settings [:log])
                       :admins (settings/get settings [:admins])
                       :settings settings
+                      :db-specs (settings/get settings [:db :specs])
                       :server-options (settings/get settings [:server :options])
                       :middleware-options (settings/get settings [:server :middleware])
                       :run-server run-server

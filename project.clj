@@ -9,6 +9,8 @@
                  [ez-database "0.3.1-beta1"]
                  [http-kit "2.1.19"]
                  [org.postgresql/postgresql "9.2-1002-jdbc4"]
+                 [com.jolbox/bonecp "0.8.0.RELEASE"]
+
                  [com.stuartsierra/component "0.3.0"]
                  [metosin/compojure-api "0.23.1"]
                  [org.clojure/core.match "0.3.0-alpha4"]
@@ -32,7 +34,7 @@
                  [ez-web "0.3.0"]
                  [cljs-ajax "0.5.1"]
                  [com.taoensso/sente "1.6.0"]
-                 [joplin.datomic "0.3.4"]]
+                 [joplin.jdbc "0.3.4"]]
 
   :uberjar-name "meal.jar"
 

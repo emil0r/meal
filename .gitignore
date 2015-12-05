@@ -12,3 +12,4 @@ pom.xml
 .repl
 .nrepl-port
 /settings.edn
+/resources/public/static/css/main.css

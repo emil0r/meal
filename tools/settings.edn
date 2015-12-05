@@ -1,0 +1,5 @@
+{:meal
+ {:notify ["../resources/public/static/css/main.css"]
+  :actions [{:command "lessc ../less/meal.less ../resources/public/static/css/main.css"
+             :watch-dir "../less/"
+             :pattern "^[\\w+0-9]+"}]}}

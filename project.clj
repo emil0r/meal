@@ -7,6 +7,18 @@
                  [ez-database "0.3.1-beta1"]
                  [http-kit "2.1.19"]
                  [org.postgresql/postgresql "9.2-1002-jdbc4"]
+                 [com.stuartsierra/component "0.3.0"]
+                 [metosin/compojure-api "0.23.1"]
+                 [org.clojure/core.match "0.3.0-alpha4"]
+                 [hiccup "1.0.5"]
+                 [ring/ring-anti-forgery "1.0.0"]
+                 [slingshot "0.12.2"]
+                 [com.cognitect/transit-clj "0.8.283"]
+                 [clj-time "0.11.0"]
+                 [buddy "0.7.2"]
+                 [com.taoensso/timbre "4.1.4"]
+                 [com.draines/postal "1.11.4"]
+                 [com.taoensso/sente "1.6.0"]
 
                  [org.clojure/clojurescript "1.7.145"]
                  [com.cognitect/transit-cljs "0.8.225"]
@@ -17,6 +29,7 @@
                  [secretary "1.2.3"]
                  [ez-web "0.3.0"]
                  [cljs-ajax "0.5.1"]
+                 [com.taoensso/sente "1.6.0"]
                  [joplin.datomic "0.3.4"]]
 
   :uberjar-name "meal.jar"

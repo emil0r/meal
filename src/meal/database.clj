@@ -52,6 +52,12 @@
               (.setPartitionCount partition-count))]
     (assoc db-spec :datasource ds)))
 
+
+(defn get-migration-map [{:keys [subprotocol subname user password]} path]
+  {:db {:type :sql
+        :url (str "jdbc:" subprotocol ":" subname "?user=" user "&password=" password)}
+   :migrator path})
+
 (extend-type EzDatabase
   component/Lifecycle
   (start [this]
@@ -69,6 +75,9 @@
                                [key (bonecp-datasource db-spec ds-spec)]))
                            (keys db-specs)))
                 this (assoc this :db-specs db-specs)]
+            (log/info "Running migrations")
+            (joplin/migrate-db (get-migration-map (:default db-specs)
+                                                  "resources/migrations/"))
             (reset! my-db this)
             this)))))
   (stop [this]
